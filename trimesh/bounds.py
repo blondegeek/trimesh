@@ -81,7 +81,7 @@ def oriented_bounds_2D(points):
     return transform, rectangle
 
 
-def oriented_bounds(obj, angle_digits=2):
+def oriented_bounds(obj, angle_digits=2, qhull_options=None):
     '''
     Find the oriented bounding box for a Trimesh
 
@@ -118,7 +118,7 @@ def oriented_bounds(obj, angle_digits=2):
         if util.is_shape(points, (-1, 2)):
             return oriented_bounds_2D(points)
         elif util.is_shape(points, (-1, 3)):
-            hull_obj = spatial.ConvexHull(points)
+            hull_obj = spatial.ConvexHull(points,qhull_options=qhull_options)
             vertices = hull_obj.points[hull_obj.vertices]
             hull_normals, valid = triangles.normals(
                 hull_obj.points[hull_obj.simplices])
